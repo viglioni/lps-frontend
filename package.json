@@ -12,7 +12,8 @@
     "start": "NODE_ENV=production node dist/server/main.js",
     "start:exported": "serve ./out",
     "test": "jest",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.1",
