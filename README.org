@@ -1,0 +1,19 @@
+* LPs front
+  A frontend for [[https://github.com/Viglioni/lps-backend/][LPs backend]]
+
+  This project uses [[https://reactjs.org/][ReactJS]], [[https://nextjs.org/][NextJS]] and [[https://material-ui.com/][Material Ui]]
+* Install build and run
+  #+begin_src shell :exports both 
+    # Installing deps
+    npm install
+    
+    # Running in dev mode
+    npm run dev
+    
+    # Building
+    npm run build
+    
+    # Running in prod mode (must build first)
+    npm run start
+    
+  #+end_src
