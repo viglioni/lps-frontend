@@ -13,7 +13,8 @@
     "start:exported": "serve ./out",
     "test": "jest",
     "test:dev": "jest --watch",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "hostinger:deploy": "npm run export && sh ./scripts/hostinger-deploy.sh"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.1",

@@ -6,6 +6,5 @@
     "isolatedModules": false,
     "noEmit": false,
     "experimentalDecorators": true
-  },
-  "include": ["server/**/*.ts"]
+  }
 }
