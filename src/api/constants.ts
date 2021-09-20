@@ -4,8 +4,9 @@ import { Url } from '../shared/types/aliases'
 const baseUrlDev = 'http://localhost:1337'
 const baseUrlProd = 'https://lps-backend.herokuapp.com'
 
-export enum endpoints {
+export enum Endpoint {
   ALL_LPS = '/lps',
+  ALL_FOR_SALE = '/lps/for-sale',
 }
 
 export function getBaseUrl(): Url {

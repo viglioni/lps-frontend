@@ -1,4 +1,6 @@
 import { CircularProgress, Grid, makeStyles } from '@material-ui/core'
+import { pipe } from 'fp-ts/lib/function'
+import * as TE from 'fp-ts/TaskEither'
 import React, { useEffect, useState } from 'react'
 import { getAllLPs } from '../api/getLPs'
 import { DiscCard } from '../components/disc-card'
@@ -20,19 +22,17 @@ const Home = (): JSX.Element => {
 
   const { root } = useStyles()
 
-  useEffect((): void => {
+  useEffect(() => {
     setLoading(true)
-    getAllLPs()
-      .then(({ data }) => {
-        setLps(data.LPs)
-      })
-      .catch(err => {
-        console.error(err)
-        setError(true)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+
+    const onLeft = (e: Error) => {
+      console.error(e)
+      setError(true)
+    }
+
+    pipe(getAllLPs(), TE.mapLeft(onLeft), TE.map(setLps))().finally(() => {
+      setLoading(false)
+    })
   }, [])
 
   return (
