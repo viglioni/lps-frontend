@@ -7,6 +7,7 @@ const baseUrlProd = 'https://lps-backend.herokuapp.com'
 export enum Endpoint {
   ALL_LPS = '/lps',
   ALL_FOR_SALE = '/lps/for-sale',
+  RANDOM = '/lps/random',
 }
 
 export function getBaseUrl(): Url {
