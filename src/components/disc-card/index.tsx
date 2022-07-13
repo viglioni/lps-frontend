@@ -15,19 +15,21 @@ const useStyles = makeStyles({
   },
 })
 
-export const DiscCard = (info: LP): JSX.Element => {
+export type DiscCardProps = { showForSale?: boolean } & LP
+
+export const DiscCard = (props: DiscCardProps): JSX.Element => {
   const { root, media } = useStyles()
 
-  const year = info.released.getFullYear()
+  const year = props.released.getFullYear()
 
-  const priceHeader = info.salePrice && (
-    <CardHeader subheader={formatBRL(info.salePrice)} />
+  const priceHeader = props.showForSale && props.salePrice && (
+    <CardHeader subheader={formatBRL(props.salePrice)} />
   )
 
   return (
-    <Card className={root} key={info.id}>
-      <CardMedia className={media} image={info.coverUrl} />
-      <CardHeader title={info.name} subheader={info.artist + ', ' + year} />
+    <Card className={root} key={props.id}>
+      <CardMedia className={media} image={props.coverUrl} />
+      <CardHeader title={props.name} subheader={props.artist + ', ' + year} />
       {priceHeader}
     </Card>
   )

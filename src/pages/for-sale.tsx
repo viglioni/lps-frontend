@@ -4,10 +4,10 @@ import * as TE from 'fp-ts/TaskEither'
 import * as R from 'ramda'
 import React, { useEffect, useState } from 'react'
 import { getAllForSale } from '../api/getLPs'
-import { DiscCard } from '../components/disc-card'
+import { DiscCard, DiscCardProps } from '../components/disc-card'
 import { toTypography } from '../helpers/elements'
 import { mapToComponent } from '../helpers/functors'
-import { LPs } from '../shared/types/lps'
+import { LP } from '../shared/types/lps'
 
 const useStyles = makeStyles({
   root: {
@@ -17,10 +17,10 @@ const useStyles = makeStyles({
 })
 
 const Home = (): JSX.Element => {
-  const [lps, setLps] = useState<LPs>([])
+  const [lps, setLps] = useState<DiscCardProps[]>([])
   const [isLoading, setLoading] = useState<boolean>(false)
   const [hasError, setError] = useState<boolean>(false)
-  const hasDiscs = R.isEmpty(lps) && R.not(isLoading)
+  const hasNoDiscs = R.isEmpty(lps) && R.not(isLoading)
 
   const { root } = useStyles()
 
@@ -32,7 +32,12 @@ const Home = (): JSX.Element => {
       setError(true)
     }
 
-    pipe(getAllForSale(), TE.mapLeft(onLeft), TE.map(setLps))().finally(() => {
+    pipe(
+      getAllForSale(),
+      TE.mapLeft(onLeft),
+      TE.map(R.map<LP, DiscCardProps>(lp => ({ ...lp, showForSale: true }))),
+      TE.map(setLps),
+    )().finally(() => {
       setLoading(false)
     })
   }, [])
@@ -44,7 +49,7 @@ const Home = (): JSX.Element => {
       alignContent="space-around"
       justifyContent="space-evenly"
     >
-      {hasDiscs && toTypography('Não há discos à venda!', { variant: 'h3' })}
+      {hasNoDiscs && toTypography('Não há discos à venda!', { variant: 'h3' })}
       {isLoading && <CircularProgress />}
       {hasError &&
         toTypography('Something went wrong. Please reload the page.')}
