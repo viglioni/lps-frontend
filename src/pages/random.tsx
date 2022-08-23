@@ -19,11 +19,10 @@ const Random = (): JSX.Element => {
   const [lp, setLp] = useState<LP>()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [hasError, setError] = useState<boolean>(false)
-  const foundDisk = lp && R.not(isLoading)
 
   const { root } = useStyles()
 
-  const loadDisk = async (): Promise<void> => {
+  const loadDisk = (): void => {
     setLoading(true)
 
     const onLeft = (e: Error) => {
@@ -40,6 +39,8 @@ const Random = (): JSX.Element => {
     loadDisk()
   }, [])
 
+  const disk = lp && R.not(isLoading) && <DiscCard {...lp} />
+
   return (
     <Grid
       className={root}
@@ -51,7 +52,7 @@ const Random = (): JSX.Element => {
       {isLoading && <CircularProgress />}
       {hasError &&
         toTypography('Something went wrong. Please reload the page.')}
-      {foundDisk && <DiscCard {...lp} />}
+      {disk}
       <Button onClick={loadDisk}>Reload!</Button>
     </Grid>
   )
